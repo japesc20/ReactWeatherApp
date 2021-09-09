@@ -1,0 +1,24 @@
+.five_day_forecast {
+    display: block;
+    overflow: auto;
+}
+
+.temp_body {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding: 1rem;
+    width: 800px;
+    height: 300px;
+    background-color: #5c10d4;
+    margin: 2rem;
+    overflow: auto
+}
+
+.each_data_point {
+    display: flex;
+}
+
+li {
+    list-style: none;
+}

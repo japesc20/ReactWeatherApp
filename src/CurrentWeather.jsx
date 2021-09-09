@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import axios from "axios";
-import './CurrentWeather.css'
 
 
 import WindGust from './images/wind_speed.png'
@@ -34,9 +33,7 @@ function CurrentWeather() {
         const res = await axios.get(
           `${process.env.REACT_APP_API_URL}/weather?lat=${latitude}&lon=${longitude}&appid=${process.env.REACT_APP_API_KEY}&units=imperial`
         );
-        const res2 = await axios.get(
-          `${process.env.REACT_APP_API_URL}/forecast?lat=${latitude}&lon=${longitude}&appid=${process.env.REACT_APP_API_KEY}&units=imperial`
-        );
+
   
         setTemperature(Math.round(res.data.main.temp));
         setWeather(res.data.weather[0].main);
@@ -45,8 +42,7 @@ function CurrentWeather() {
         setforecastDescription(res.data.weather[0].description);
         setWindSpeed(res.data.wind.speed);
   
-  
-        console.log(res.data, res2.data);
+
       } catch (err) {
         console.error(err);
       }
@@ -65,30 +61,30 @@ function CurrentWeather() {
                 <h2 className="description">{weather}</h2>
               </div>
               <div className="misc_body">
-                <div className="forecast">
-                <span className="misc_title">Forecast:</span> 
-                <img 
-                alt=""
-                src={`${process.env.REACT_APP_ICON_URL}/${iconID}.png`} 
-                style={{width: '80px'}}
-                />
-                <span className="desc_output">{forecastDescription}</span>
-                </div>
-                <div className="wind">
-                <span className="misc_title">Wind Speed:</span> 
+                <div className="forecast spacing">
+                  <span className="misc_title">Forecast:</span> 
                   <img 
                   alt=""
-                  src={WindGust} />
-                  <span className="desc_output">{windSpeed} mph</span>
-                </div>
-                <div className="real_feel">
-                <span className="misc_title">Real Feel:</span> 
-                  <img 
-                  alt=""
-                  src={RealFeel} 
+                  src={`${process.env.REACT_APP_ICON_URL}/${iconID}.png`} 
                   style={{width: '80px'}}
                   />
-                  <span className="desc_output">{realFeel} ºF</span>
+                  <span className="desc_output">{forecastDescription}</span>
+                </div>
+                <div className="wind spacing">
+                  <span className="misc_title">Wind Speed:</span> 
+                    <img 
+                    alt=""
+                    src={WindGust} />
+                    <span className="desc_output">{windSpeed} mph</span>
+                </div>
+                <div className="real_feel spacing">
+                  <span className="misc_title">Real Feel:</span> 
+                    <img 
+                    alt=""
+                    src={RealFeel} 
+                    style={{width: '80px'}}
+                    />
+                    <span className="desc_output">{realFeel} ºF</span>
                 </div>
               </div>
             </div>

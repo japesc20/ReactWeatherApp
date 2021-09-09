@@ -1,19 +1,14 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect} from 'react'
 import axios from 'axios'
-
+import './FiveDayForecast.css'
 
 
 function FiveDayForecast() {
 
     const [latitude, setLatitude] = useState(0);
     const [longitude, setLongitude] = useState(0);
-    const [weather, setWeather] = useState("");
-    const [temperature, setTemperature] = useState(0);
+    const [forecast, setForecast] = useState([]);
 
-    
-
-  
-   
   
     const savePositionToState = (position) => {
       setLatitude(position.coords.latitude);
@@ -25,52 +20,39 @@ function FiveDayForecast() {
         await window.navigator.geolocation.getCurrentPosition(
           savePositionToState
         );
-        const res = await axios.get(
-          `${process.env.REACT_APP_API_URL}/weather?lat=${latitude}&lon=${longitude}&appid=${process.env.REACT_APP_API_KEY}&units=imperial`
-        );
         const res2 = await axios.get(
           `${process.env.REACT_APP_API_URL}/forecast?lat=${latitude}&lon=${longitude}&appid=${process.env.REACT_APP_API_KEY}&units=imperial`
         );
-  
-        setTemperature(Math.round(res.data.main.temp));
-        setWeather(res.data.weather[0].main);
 
-  
-  
-        console.log(res.data, res2.data);
-      } catch (err) {
+
+        setForecast(res2.data.list.map(item => [
+          <div className="each_data_point">
+            <li className="date_time" key={item.dt_txt}>{`Date & Time: ${item.dt_txt}`}</li>,
+            <img className="icon" key={item.weather[0].icon} src={`https://openweathermap.org/img/w/${item.weather[0].icon}.png`} />,
+            <li className="main_temp" key={item.main.temp}>{`Temp: ${item.main.temp}`}</li>
+          </div>
+        ]
+        ))
+
+
+    } catch (err) {
         console.error(err);
       }
     };
-  
+
     useEffect(() => {
       fetchWeather();
     }, [latitude, longitude]);
+
 
 
     return (
         <div>
         <div className="five_day_forecast">
             <div className="temp_body">
-                <h2 className="temperature">{temperature}ºF</h2>
-                <h2 className="description">{weather}</h2>
-              </div>
-              <div className="temp_body">
-                <h2 className="temperature">{temperature}ºF</h2>
-                <h2 className="description">{weather}</h2>
-              </div>
-              <div className="temp_body">
-                <h2 className="temperature">{temperature}ºF</h2>
-                <h2 className="description">{weather}</h2>
-              </div>
-              <div className="temp_body">
-                <h2 className="temperature">{temperature}ºF</h2>
-                <h2 className="description">{weather}</h2>
-              </div>
-              <div className="temp_body">
-                <h2 className="temperature">{temperature}ºF</h2>
-                <h2 className="description">{weather}</h2>
-              </div>
+                <p>{forecast}</p>
+
+            </div>
             </div>
         </div>
     )

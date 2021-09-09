@@ -9,6 +9,11 @@
   align-items: center;
 }
 
+a {
+  color: #fff;
+  text-decoration: none;
+}
+
 
 .container {
   position: relative;
@@ -46,11 +51,15 @@
   font-size: 1rem;
 }
 
+.buttons {
+  display: flex;
+  right: 0;
+}
+
 button {
-  position: fixed;
+  position: relative;
   margin: 20px;
   outline: none;
-  right: 0;
 }
 .custom-btn {
   width: 130px;
@@ -62,7 +71,6 @@ button {
   background: transparent;
   cursor: pointer;
   transition: all 0.3s ease;
-  position: absolute;
   display: inline-block;
 }
 
@@ -92,6 +100,10 @@ button {
   margin: 2rem;
 }
 
+.date {
+  text-align: center;
+}
+
 .temperature {
   font-size: 6rem;
   text-align: center;
@@ -118,6 +130,10 @@ button {
   width: 70%;
   background-color: #5c10d4;
   margin: 2rem 2rem 2rem 0;
+}
+
+.spacing {
+  margin: 1.5rem;
 }
 
 .misc_title {
@@ -149,3 +165,9 @@ button {
   display: flex;
   flex-direction: row;
 }
+
+/* @media only screen and (max-width: 1024px) {
+  .five_day_forecast {
+   flex-direction: column;
+ }
+} */

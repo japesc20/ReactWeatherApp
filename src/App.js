@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import "./App.css";
-import { BrowserRouter as Route, Switch, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
 
 import BannerImage from './images/weather_logo.png'
 import CurrentWeather from "./CurrentWeather";
@@ -33,17 +33,11 @@ const App = () => {
       const res = await axios.get(
         `${process.env.REACT_APP_API_URL}/weather?lat=${latitude}&lon=${longitude}&appid=${process.env.REACT_APP_API_KEY}&units=imperial`
       );
-      const res2 = await axios.get(
-        `${process.env.REACT_APP_API_URL}/forecast?lat=${latitude}&lon=${longitude}&appid=${process.env.REACT_APP_API_KEY}&units=imperial`
-      );
-
 
       setCityName(res.data.name);
       setCountry(res.data.sys.country);
 
 
-
-      console.log(res.data, res2.data);
     } catch (err) {
       console.error(err);
     }
@@ -55,30 +49,45 @@ const App = () => {
 
 
     return (
-      <div className='App'>
-        <div className='container'>
-          <div className="banner">
-            <img 
-            src={BannerImage}
-            style={{width: '80px'}}
-            />
-            <span className="location">
-              <h1>React Weather Report</h1>
-              <h4>{date} {cityName}, {country}</h4>
-            </span>
-            <a href="/">
-              <button className="custom-btn btn-1">
-              <Link to="/FiveDayForecast">5-Day Forecast</Link>
-              </button></a>
+      <Router>
+        <div className='App'>
+          <div className='container'>
+            <div className="banner">
+              <img 
+              alt="Banner Logo"
+              src={BannerImage}
+              style={{width: '80px'}}
+              />
+              <span className="location">
+                <h1>React Weather Report</h1>
+                <h4>{date} {cityName}, {country}</h4>
+              </span>
+              <span className="buttons">
+                <a href="/">
+                  <button className="custom-btn btn-1">
+                  <Link to="/">Current Weather</Link>
+                  </button>
+                </a>
+                <a href="/">
+                  <button className="custom-btn btn-1">
+                  <Link to="/FiveDayForecast">5-Day Forecast</Link>
+                  </button>
+                </a>
+              </span>
+            </div>
+
+            <Switch>
+              <Route path="/" exact>
+                <CurrentWeather />
+              </Route>
+              <Route path="/FiveDayForecast">
+              <FiveDayForecast />
+              </Route>
+            </Switch>
+
           </div>
-
-          
-          <CurrentWeather />
-          <FiveDayForecast />
-
-
         </div>
-      </div>
+      </Router>
     );
   }
 
