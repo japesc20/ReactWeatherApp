@@ -27,9 +27,9 @@ function FiveDayForecast() {
 
         setForecast(res2.data.list.map(item => [
           <div className="each_data_point">
-            <li className="date_time" key={item.dt_txt}>{`Date & Time: ${item.dt_txt}`}</li>,
-            <img className="icon" key={item.weather[0].icon} src={`https://openweathermap.org/img/w/${item.weather[0].icon}.png`} />,
-            <li className="main_temp" key={item.main.temp}>{`Temp: ${item.main.temp}`}</li>
+            <li className="date_time" key={item.dt_txt}>{`Date & Time: ${item.dt_txt}`}</li>
+            <img className="icon" key={item.weather[0].icon} src={`https://openweathermap.org/img/w/${item.weather[0].icon}.png`} />
+            <li className="main_temp" key={item.main.temp}>{`Temp: ${item.main.temp} °F`}</li>
           </div>
         ]
         ))
