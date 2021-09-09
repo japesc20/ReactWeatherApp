@@ -9,17 +9,16 @@ import FiveDayForecast from "./FiveDayForecast";
 
 const App = () => {
 
-
   const [latitude, setLatitude] = useState(0);
   const [longitude, setLongitude] = useState(0);
   const [cityName, setCityName] = useState("");
   const [country, setCountry] = useState("")
 
-
+  // Creating date time
   const date = new Date().toLocaleString().split(',')[0];
 
  
-
+  // Getting users location
   const savePositionToState = (position) => {
     setLatitude(position.coords.latitude);
     setLongitude(position.coords.longitude);

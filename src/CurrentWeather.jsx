@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import axios from "axios";
 
-
 import WindGust from './images/wind_speed.png'
 import RealFeel from './images/realfeel.png'
 
@@ -19,12 +18,13 @@ function CurrentWeather() {
     const [windSpeed, setWindSpeed] = useState("");
   
    
-  
+    // Getting users location
     const savePositionToState = (position) => {
       setLatitude(position.coords.latitude);
       setLongitude(position.coords.longitude);
     };
   
+    // Fetching Weather Data
     const fetchWeather = async () => {
       try {
         await window.navigator.geolocation.getCurrentPosition(
@@ -34,14 +34,13 @@ function CurrentWeather() {
           `${process.env.REACT_APP_API_URL}/weather?lat=${latitude}&lon=${longitude}&appid=${process.env.REACT_APP_API_KEY}&units=imperial`
         );
 
-  
+          // Setting data states
         setTemperature(Math.round(res.data.main.temp));
         setWeather(res.data.weather[0].main);
         setIconID(res.data.weather[0].icon);
         setRealFeel(res.data.main.feels_like);
         setforecastDescription(res.data.weather[0].description);
         setWindSpeed(res.data.wind.speed);
-  
 
       } catch (err) {
         console.error(err);

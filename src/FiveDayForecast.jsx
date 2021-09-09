@@ -10,11 +10,13 @@ function FiveDayForecast() {
     const [forecast, setForecast] = useState([]);
 
   
+    // Getting users location
     const savePositionToState = (position) => {
       setLatitude(position.coords.latitude);
       setLongitude(position.coords.longitude);
     };
   
+    // Fetching Weather Data
     const fetchWeather = async () => {
       try {
         await window.navigator.geolocation.getCurrentPosition(
@@ -24,7 +26,7 @@ function FiveDayForecast() {
           `${process.env.REACT_APP_API_URL}/forecast?lat=${latitude}&lon=${longitude}&appid=${process.env.REACT_APP_API_KEY}&units=imperial`
         );
 
-
+        // Loop weather data and store data needed
         setForecast(res2.data.list.map(item => [
           <div className="each_data_point">
             <li className="date_time" key={item.dt_txt}>{`Date & Time: ${item.dt_txt}`}</li>
@@ -33,7 +35,6 @@ function FiveDayForecast() {
           </div>
         ]
         ))
-
 
     } catch (err) {
         console.error(err);
